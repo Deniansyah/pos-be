@@ -1,9 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const { PORT } = require("./src/helpers/env");
-// const authRouter = require("./src/routers/auth.router");
-// const usersRouter = require("./src/routers/user.router");
-// const productRouter = require("./src/routers/product.router");
+
+const authRouter = require("./src/routers/auth.router");
+const usersRouter = require("./src/routers/user.router");
+const categoriesRouter = require("./src/routers/categories.router")
+const productRouter = require("./src/routers/product.router");
 // const stockRouter = require("./src/routers/stock.router");
 
 const app = express()
@@ -20,9 +22,10 @@ app.get("/", (req, res) => {
   });
 });
 
-// app.use(authRouter);
-// app.use(usersRouter);
-// app.use(productRouter);
+app.use(authRouter);
+app.use(usersRouter);
+app.use(categoriesRouter);
+app.use(productRouter);
 // app.use(stockRouter);
 
 const APP_PORT = PORT || 3001;

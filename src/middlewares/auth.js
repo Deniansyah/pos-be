@@ -31,13 +31,13 @@ module.exports = {
       return response(res, 500);
     }
   },
-  isOperator: async (req, res, next) => {
+  isCashier: async (req, res, next) => {
     try {
       const user = req.userData;
       if (user.role === 2) {
         next();
       } else {
-        return response(res, 404, { message: "Only Operator" });
+        return response(res, 404, { message: "Only Cashier" });
       }
     } catch (error) {
       return response(res, 500);

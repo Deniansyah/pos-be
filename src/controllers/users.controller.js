@@ -64,7 +64,7 @@ exports.createUser = (req, res) => {
     selectUserbyEmail(req.body.email, (error, data) => {
       if (data.rows.length === 1) {
         return response(res, 400, {
-          message: "Email sudah digunakan sebelumnya.",
+          message: "Email already exist",
         });
       }
 
