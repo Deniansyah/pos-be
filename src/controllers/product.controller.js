@@ -53,7 +53,6 @@ exports.createProduct = (req, res) => {
     };
 
     insertProduct(payload, (error, data) => {
-      console.log(error);
       return res.status(200).json({
         status: true,
         message: "Product created success",
@@ -61,7 +60,7 @@ exports.createProduct = (req, res) => {
       });
     });
   } catch (error) {
-    return response(res, 500);
+    return response(res, 500)
   }
 };
 
