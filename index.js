@@ -6,7 +6,7 @@ const authRouter = require("./src/routers/auth.router");
 const usersRouter = require("./src/routers/user.router");
 const categoriesRouter = require("./src/routers/categories.router")
 const productRouter = require("./src/routers/product.router");
-// const stockRouter = require("./src/routers/stock.router");
+const transactionRouter = require("./src/routers/transaction.router");
 
 const app = express()
 
@@ -26,7 +26,7 @@ app.use(authRouter);
 app.use(usersRouter);
 app.use(categoriesRouter);
 app.use(productRouter);
-// app.use(stockRouter);
+app.use(transactionRouter);
 
 const APP_PORT = PORT || 3001;
 app.listen(APP_PORT, () => {

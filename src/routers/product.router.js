@@ -1,5 +1,5 @@
 const productRouter = require("express").Router();
-const { auth, isAdmin } = require("../middlewares/auth");
+const { auth, isAdmin, isCashier } = require("../middlewares/auth");
 const {
   readAllProduct,
   createProduct,
@@ -43,5 +43,9 @@ productRouter.patch(
 );
 productRouter.delete("/product/:id", auth, isAdmin, deleteProduct);
 productRouter.get("/product/:id", auth, isAdmin, readProduct);
+
+productRouter.get("/product-cashier", auth, isCashier, readAllProduct)
+productRouter.get("/product-cashier/:id", auth, isCashier, readProduct)
+
 
 module.exports = productRouter;
