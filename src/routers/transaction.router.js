@@ -6,16 +6,13 @@ const {
   deleteTransaction,
   readTransaction,
 } = require("../controllers/transaction.controller");
-const { auth, isCashier, isAdmin } = require("../middlewares/auth");
+const { auth, isCashier } = require("../middlewares/auth");
 
-transactionRouter.get("/transaction", auth, isCashier, readAllTransaction);
+transactionRouter.get("/transaction", auth, readAllTransaction);
 transactionRouter.post("/transaction", auth, isCashier, createTransaction);
 transactionRouter.patch("/transaction/:id", auth, isCashier, updateTransaction);
 transactionRouter.delete("/transaction/:id", auth, isCashier, deleteTransaction);
-transactionRouter.get("/transaction/:id", auth, isCashier, readTransaction);
-
-transactionRouter.get("/transaction-adm", auth, isAdmin, readAllTransaction);
-transactionRouter.get("/transaction-adm/:id", auth, isAdmin, readTransaction);
+transactionRouter.get("/transaction/:id", auth, readTransaction);
 
 
 module.exports = transactionRouter;

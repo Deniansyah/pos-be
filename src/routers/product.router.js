@@ -1,5 +1,5 @@
 const productRouter = require("express").Router();
-const { auth, isAdmin, isCashier } = require("../middlewares/auth");
+const { auth, isAdmin } = require("../middlewares/auth");
 const {
   readAllProduct,
   createProduct,
@@ -24,7 +24,7 @@ productRouter.patch(
   uploadProduct
 );
 
-productRouter.get("/product", auth, isAdmin, readAllProduct);
+productRouter.get("/product", auth, readAllProduct);
 productRouter.post(
   "/product",
   auth,
@@ -42,10 +42,7 @@ productRouter.patch(
   updateProduct
 );
 productRouter.delete("/product/:id", auth, isAdmin, deleteProduct);
-productRouter.get("/product/:id", auth, isAdmin, readProduct);
-
-productRouter.get("/product-cashier", auth, isCashier, readAllProduct)
-productRouter.get("/product-cashier/:id", auth, isCashier, readProduct)
+productRouter.get("/product/:id", auth, readProduct);
 
 
 module.exports = productRouter;
