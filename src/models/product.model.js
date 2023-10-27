@@ -2,7 +2,7 @@ const db = require("../helpers/db");
 
 exports.selectAllProduct = (filter, cb) => {
   db.query(
-    `SELECT * FROM "product" WHERE ${filter.searchBy} ILIKE $3 ORDER BY "${filter.sortBy}" ${filter.sort}  LIMIT $1 OFFSET $2`,
+    `SELECT p.id AS id, c.name AS categories_name, p.picture, p.name, p.description, p.price, p."createdAt", p."updatedAt" FROM product p JOIN categories c ON p.categories_id = c.id WHERE p.${filter.searchBy} ILIKE $3 ORDER BY "${filter.sortBy}" ${filter.sort}  LIMIT $1 OFFSET $2`,
     [filter.limit, filter.offset, `%${filter.search}%`],
     cb
   );
@@ -44,6 +44,6 @@ exports.dropProduct = (id, cb) => {
 };
 
 exports.selectProduct = (id, cb) => {
-  db.query('SELECT * FROM "product" WHERE id = $1', [id], cb);
+  db.query('SELECT p.id AS id, p.categories_id, c.name AS categories_name, p.picture, p.name, p.description, p.price, p."createdAt", p."updatedAt" FROM product p JOIN categories c ON p.categories_id = c.id WHERE p.id = $1', [id], cb);
 };
 
