@@ -5,6 +5,7 @@ const {
   changeDetailTransaction,
   dropDetailTransaction,
   selectDetailTransaction,
+  selectALLTransactionByTransactionId,
 } = require("../models/detailTransaction.model");
 
 exports.readAllDetailTransaction = (req, res) => {
@@ -84,6 +85,20 @@ exports.readDetailTransaction = (req, res) => {
         status: true,
         message: "Show detail transaction",
         results: data.rows[0],
+      });
+    });
+  } catch (error) {
+    return response(res, 500);
+  }
+};
+
+exports.readAllTransactionByTransactionId = (req, res) => {
+  try {
+    selectALLTransactionByTransactionId(req.params.transaction_id, (error, data) => {
+      return res.status(200).json({
+        status: true,
+        message: "Show all transaction by transactin_id",
+        results: data.rows,
       });
     });
   } catch (error) {

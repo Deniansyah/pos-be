@@ -27,3 +27,7 @@ exports.dropDetailTransaction = (id, cb) => {
 exports.selectDetailTransaction = (id, cb) => {
   db.query('SELECT * FROM "detailTransaction" WHERE id = $1', [id], cb);
 };
+
+exports.selectALLTransactionByTransactionId = (transaction_id, cb) => {
+  db.query('SELECT * FROM "detailTransaction" WHERE transaction_id = $1', [transaction_id], cb);
+};

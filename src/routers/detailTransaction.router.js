@@ -5,6 +5,7 @@ const {
   updateDetailTransaction,
   deleteDetailTransaction,
   readDetailTransaction,
+  readAllTransactionByTransactionId
 } = require("../controllers/detailTransaction.controller");
 const { auth, isCashier } = require("../middlewares/auth");
 
@@ -13,6 +14,7 @@ detailTransactionRouter.post("/detail-transaction", auth, isCashier, createDetai
 detailTransactionRouter.patch("/detail-transaction/:id", auth, isCashier, updateDetailTransaction);
 detailTransactionRouter.delete("/detail-transaction/:id", auth, isCashier, deleteDetailTransaction);
 detailTransactionRouter.get("/detail-transaction/:id", auth, readDetailTransaction);
+detailTransactionRouter.get("/detail-transaction/by/:transaction_id", auth, readAllTransactionByTransactionId);
 
 
 module.exports = detailTransactionRouter;
