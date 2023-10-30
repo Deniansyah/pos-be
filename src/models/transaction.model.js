@@ -37,5 +37,5 @@ exports.dropTransaction = (id, cb) => {
 };
 
 exports.selectTransaction = (id, cb) => {
-  db.query('SELECT * FROM "transaction" WHERE id = $1', [id], cb);
+  db.query('SELECT "t"."id" AS "id", "t"."users_id", "u"."name" AS "name", "t"."invoice", "t"."date", "t"."total", "t"."createdAt", "t"."updatedAt" FROM "transaction" "t" JOIN "users" "u" ON "t"."users_id" = "u"."id" WHERE t.id = $1', [id], cb);
 };
