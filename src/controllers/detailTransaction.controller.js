@@ -6,6 +6,8 @@ const {
   dropDetailTransaction,
   selectDetailTransaction,
   selectALLTransactionByTransactionId,
+  createDetailTransactionArray,
+  insertDetailTransactionArray
 } = require("../models/detailTransaction.model");
 
 exports.readAllDetailTransaction = (req, res) => {
@@ -105,3 +107,20 @@ exports.readAllTransactionByTransactionId = (req, res) => {
     return response(res, 500);
   }
 };
+
+exports.createDetailTransactionArray = (req, res) => {
+  try {
+    const body = req.body
+
+    for (let i = 0; i < body.length; i++) {
+      insertDetailTransaction(body[i]);
+    }
+
+    return res.status(200).json({
+      status: true,
+      message: "Detail transaction add successfully"
+    });
+  } catch (error) {
+    return response(res, 500);
+  }
+}

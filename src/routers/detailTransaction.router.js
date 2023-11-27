@@ -5,12 +5,14 @@ const {
   updateDetailTransaction,
   deleteDetailTransaction,
   readDetailTransaction,
-  readAllTransactionByTransactionId
+  readAllTransactionByTransactionId,
+  createDetailTransactionArray
 } = require("../controllers/detailTransaction.controller");
 const { auth, isCashier } = require("../middlewares/auth");
 
 detailTransactionRouter.get("/detail-transaction", auth, readAllDetailTransaction);
 detailTransactionRouter.post("/detail-transaction", auth, isCashier, createDetailTransaction);
+detailTransactionRouter.post("/detail-transaction-arr", auth, isCashier, createDetailTransactionArray);
 detailTransactionRouter.patch("/detail-transaction/:id", auth, isCashier, updateDetailTransaction);
 detailTransactionRouter.delete("/detail-transaction/:id", auth, isCashier, deleteDetailTransaction);
 detailTransactionRouter.get("/detail-transaction/:id", auth, readDetailTransaction);
