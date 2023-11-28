@@ -18,8 +18,8 @@ exports.selectCountAllTransaction = (filter, cb) => {
 
 exports.insertTransaction = (data, cb) => {
   db.query(
-    'INSERT INTO "transaction" ("users_id", "date", "total") VALUES ($1, $2, $3) RETURNING *',
-    [data.users_id, data.date, data.total],
+    'INSERT INTO "transaction" ("users_id", "total") VALUES ($1, $2) RETURNING *',
+    [data.users_id, data.total],
     cb
   );
 };

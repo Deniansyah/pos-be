@@ -36,7 +36,6 @@ exports.readAllTransaction = (req, res) => {
 exports.createTransaction = (req, res) => {
   const payload = {
     users_id: req.body.users_id,
-    date: req.body.date,
     total: req.body.total,
   };
 
