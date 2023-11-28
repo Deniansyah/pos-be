@@ -13,8 +13,8 @@ const { login } = require("./auth.controller");
 
 exports.readAllProduct = (req, res) => {
   try {
-    const searchable = ["name", "description", "createdAt"];
-    const sortable = ["name", "description", "createdAt"];
+    const searchable = ["name", "categories_name", "description", "createdAt"];
+    const sortable = ["name", "categories_name", "description", "createdAt"];
 
     filter(
       req.query,

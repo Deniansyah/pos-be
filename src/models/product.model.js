@@ -2,16 +2,16 @@ const db = require("../helpers/db");
 
 exports.selectAllProduct = (filter, cb) => {
   db.query(
-    `SELECT p.id AS id, c.name AS categories_name, p.picture, p.name, p.description, p.price, p."createdAt", p."updatedAt" FROM product p JOIN categories c ON p.categories_id = c.id WHERE p.${filter.searchBy} ILIKE $3 ORDER BY "${filter.sortBy}" ${filter.sort}  LIMIT $1 OFFSET $2`,
-    [filter.limit, filter.offset, `%${filter.search}%`],
+    `SELECT p.id AS id, c.name AS categories_name, p.picture, p.name, p.description, p.price, p."createdAt", p."updatedAt" FROM product p JOIN categories c ON p.categories_id = c.id WHERE (p.${filter.searchBy} ILIKE $3 AND (c.name = $4 OR $4 IS NULL)) ORDER BY "${filter.sortBy}" ${filter.sort}  LIMIT $1 OFFSET $2`,
+    [filter.limit, filter.offset, `%${filter.search}%`, filter.categories_name],
     cb
   );
 };
 
 exports.selectCountAllProduct = (filter, cb) => {
   db.query(
-    `SELECT COUNT(${filter.searchBy}) AS "totalData" FROM "product" WHERE ${filter.searchBy} ILIKE $1`,
-    [`%${filter.search}%`],
+    `SELECT COUNT(p.${filter.searchBy}) AS "totalData" FROM product p JOIN categories c ON p.categories_id = c.id WHERE (p.${filter.searchBy} ILIKE $1 AND (c.name = $2 OR $2 IS NULL))`,
+    [`%${filter.search}%`, filter.categories_name],
     cb
   );
 };

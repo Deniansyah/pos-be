@@ -12,9 +12,9 @@ const filter = (data, searchable, sortable, countModel, res, cb) => {
   data.type = parseInt(data.type, 10) || null;
   data.cInitCol = (searchable.includes(data.cInitCol) && data.cInitCol) || "p";   // change initial coloum ex: p = product, u = users, s = stock
   data.cInitSort = (searchable.includes(data.cInitSort) && data.cInitSort) || "s";  
-
   data.cInitUser = (searchable.includes(data.cInitCol) && data.cInitCol) || "u";   // change initial coloum ex: t = transaction, u = users
   data.cInitTrans = (searchable.includes(data.cInitSort) && data.cInitSort) || "t";  
+  data.categories_name = data.categories_name || null;
 
 
   const params = {
@@ -31,6 +31,7 @@ const filter = (data, searchable, sortable, countModel, res, cb) => {
     cInitCol: data.cInitCol,
     cInitUser: data.cInitUser,
     cInitTrans: data.cInitTrans,
+    categories_name: data.categories_name,
   };
 
   const pageInfo = {
