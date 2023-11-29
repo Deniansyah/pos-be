@@ -7,7 +7,7 @@ const {
   selectDetailTransaction,
   selectALLTransactionByTransactionId,
   createDetailTransactionArray,
-  insertDetailTransactionArray
+  insertDetailTransactionArray,
 } = require("../models/detailTransaction.model");
 
 exports.readAllDetailTransaction = (req, res) => {
@@ -96,31 +96,57 @@ exports.readDetailTransaction = (req, res) => {
 
 exports.readAllTransactionByTransactionId = (req, res) => {
   try {
-    selectALLTransactionByTransactionId(req.params.transaction_id, (error, data) => {
-      return res.status(200).json({
-        status: true,
-        message: "Show all transaction by transactin_id",
-        results: data.rows,
-      });
-    });
+    selectALLTransactionByTransactionId(
+      req.params.transaction_id,
+      (error, data) => {
+        return res.status(200).json({
+          status: true,
+          message: "Show all transaction by transactin_id",
+          results: data.rows,
+        });
+      }
+    );
   } catch (error) {
     return response(res, 500);
   }
 };
 
-exports.createDetailTransactionArray = (req, res) => {
+exports.createDetailTransactionArray = async (req, res) => {
   try {
-    const body = req.body
+    const body = req.body;
+    const responseData = [];
 
     for (let i = 0; i < body.length; i++) {
-      insertDetailTransaction(body[i]);
+      await new Promise((resolve) => {
+        insertDetailTransaction(body[i], (error, data) => {
+          if (res.headersSent) {
+            // Headers sudah dikirim, hentikan iterasi
+            return resolve();
+          }
+
+          if (error) {
+            if (error.message.includes('null value in column "transaction_id"')) {
+              return resolve(response(res, 404, { message: "transaction_id is null" }));
+            } else {
+              resolve(response(res, 500));
+            }
+          } else {
+            responseData.push(data.rows[0]);
+            resolve();
+          }
+        });
+      });
     }
 
-    return res.status(200).json({
-      status: true,
-      message: "Detail transaction add successfully"
-    });
+    // Kirim tanggapan setelah loop selesai
+    if (!res.headersSent) {
+      return res.status(200).json({
+        status: true,
+        message: "Detail transaction add successfully",
+        results: responseData
+      });
+    }
   } catch (error) {
     return response(res, 500);
   }
-}
+};
