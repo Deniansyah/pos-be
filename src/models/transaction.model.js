@@ -2,7 +2,7 @@ const db = require("../helpers/db");
 
 exports.selectAllTransaction = (filter, cb) => {
   db.query(
-    `SELECT "t"."id" AS "id", "t"."users_id", "u"."name" AS "name", "t"."invoice", "t"."date", "t"."total", "t"."createdAt", "t"."updatedAt" FROM "transaction" "t" JOIN "users" "u" ON "t"."users_id" = "u"."id" WHERE ${filter.cInitUser}.${filter.searchBy} ILIKE $3 ORDER BY ${filter.cInitTrans}."${filter.sortStockBy}" ${filter.sort} LIMIT $1 OFFSET $2`,
+    `SELECT "t"."id" AS "id", "t"."users_id", "u"."name" AS "name", "t"."invoice", "t"."date", "t"."total", "t"."createdAt", "t"."updatedAt" FROM "transaction" "t" JOIN "users" "u" ON "t"."users_id" = "u"."id" WHERE ${filter.cInitUser}.${filter.searchBy} ILIKE $3 ORDER BY ${filter.cInitTrans}."${filter.sortBy}" ${filter.sort} LIMIT $1 OFFSET $2`,
     [filter.limit, filter.offset, `%${filter.search}%`],
     cb
   );
