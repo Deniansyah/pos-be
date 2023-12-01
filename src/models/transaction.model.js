@@ -24,14 +24,6 @@ exports.insertTransaction = (data, cb) => {
   );
 };
 
-exports.changeTransaction = (id, data, cb) => {
-  db.query(
-    'UPDATE "transaction" SET "users_id" = COALESCE(NULLIF($2, \'\')::INT, "users_id"), "date" = COALESCE(NULLIF($3, \'\')::TIMESTAMPTZ, "date"), "total" = COALESCE(NULLIF($4, \'\')::INT, "total") WHERE id = $1 RETURNING *',
-    [id, data.users_id, data.date, data.total],
-    cb
-  );
-};
-
 exports.dropTransaction = (id, cb) => {
   db.query('DELETE FROM "transaction" WHERE id = $1', [id], cb);
 };

@@ -4,7 +4,6 @@ const {
   selectAllTransaction,
   selectCountAllTransaction,
   insertTransaction,
-  changeTransaction,
   dropTransaction,
   selectTransaction,
 } = require("../models/transaction.model");
@@ -44,26 +43,6 @@ exports.createTransaction = (req, res) => {
       return res.status(200).json({
         status: true,
         message: "Transaction add successfully",
-        results: data.rows[0],
-      });
-    });
-  } catch (error) {
-    return response(res, 500);
-  }
-};
-
-exports.updateTransaction = (req, res) => {
-  const payload = {
-    users_id: req.body.users_id,
-    date: req.body.date,
-    total: req.body.total,
-  };
-
-  try {
-    changeTransaction(req.params.id, payload, (error, data) => {
-      return res.status(200).json({
-        status: true,
-        message: "Updated data transaction is success",
         results: data.rows[0],
       });
     });
