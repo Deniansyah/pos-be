@@ -39,3 +39,11 @@ exports.selectAllTodaysTotals = (cb) => {
 exports.selectAllYesterdaysTotals = (cb) => {
   db.query(`SELECT CURRENT_DATE - INTERVAL '1 day' AS date, COALESCE(SUM(total), 0) AS allTotal FROM transaction WHERE date::date = (CURRENT_DATE - INTERVAL '1 day')::date`, cb)
 }
+
+exports.selectTodaysCustomers = (cb) => {
+  db.query('SELECT COUNT(transaction.id) AS customer FROM transaction WHERE date::date = CURRENT_DATE', cb)
+}
+
+exports.selectYesterdaysCustomers = (cb) => {
+  db.query(`SELECT COUNT(transaction.id) AS customer FROM transaction WHERE date::date = (CURRENT_DATE - INTERVAL '1 day')::date`, cb)
+}

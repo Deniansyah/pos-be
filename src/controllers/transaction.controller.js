@@ -8,6 +8,8 @@ const {
   selectTransaction,
   selectAllTodaysTotals,
   selectAllYesterdaysTotals,
+  selectTodaysCustomers,
+  selectYesterdaysCustomers,
 } = require("../models/transaction.model");
 
 exports.readAllTransaction = (req, res) => {
@@ -99,6 +101,34 @@ exports.readAllYesterdaysTotals = (req, res) => {
       return res.status(200).json({
         status: true,
         message: "All yesterday's totals",
+        results: data.rows[0],
+      });
+    });
+  } catch (error) {
+    return response(res, 500);
+  }
+};
+
+exports.readTodaysCustomers = (req, res) => {
+  try {
+    selectTodaysCustomers((error, data) => {
+      return res.status(200).json({
+        status: true,
+        message: "Today's Customers",
+        results: data.rows[0],
+      });
+    });
+  } catch (error) {
+    return response(res, 500);
+  }
+};
+
+exports.readYesterdaysCustomers = (req, res) => {
+  try {
+    selectYesterdaysCustomers((error, data) => {
+      return res.status(200).json({
+        status: true,
+        message: "Yesterday's customers",
         results: data.rows[0],
       });
     });
