@@ -1,4 +1,5 @@
 const response = require("../helpers/response");
+const filter = require("../helpers/filter");
 const {
   selectAllDetailTransaction,
   insertDetailTransaction,
@@ -6,8 +7,8 @@ const {
   dropDetailTransaction,
   selectDetailTransaction,
   selectALLTransactionByTransactionId,
-  createDetailTransactionArray,
-  insertDetailTransactionArray,
+  selectCountPopularProduct,
+  selectPopularProduct,
 } = require("../models/detailTransaction.model");
 
 exports.readAllDetailTransaction = (req, res) => {
@@ -146,6 +147,37 @@ exports.createDetailTransactionArray = async (req, res) => {
         results: responseData
       });
     }
+  } catch (error) {
+    return response(res, 500);
+  }
+};
+
+exports.readPopularProduct = (req, res) => {
+  try {
+    const searchable = ["name", "description", "createdAt"];
+    const sortable = ["name", "description", "createdAt"];
+
+    filter(
+      req.query,
+      searchable,
+      sortable,
+      selectCountPopularProduct,
+      res,
+      (filter, pageInfo) => {
+        try {
+          selectPopularProduct(filter, (error, data) => {
+            return res.status(200).json({
+              success: true,
+              message: "Popular Product Data List",
+              pageInfo,
+              results: data?.rows,
+            });
+          });
+        } catch (error) {
+          return response(res, 500);
+        }
+      }
+    );
   } catch (error) {
     return response(res, 500);
   }

@@ -31,3 +31,18 @@ exports.selectDetailTransaction = (id, cb) => {
 exports.selectALLTransactionByTransactionId = (transaction_id, cb) => {
   db.query('SELECT * FROM "detailTransaction" WHERE transaction_id = $1', [transaction_id], cb);
 };
+
+exports.selectPopularProduct = (filter, cb) => {
+  db.query(
+    `SELECT dt.id, p.picture, dt.product_name AS name, p.description, dt.product_price AS price, dt.qty, dt."createdAt", dt."updatedAt" FROM "detailTransaction" dt JOIN product p ON dt.product_id = p.id ORDER BY dt.qty DESC LIMIT $1 OFFSET $2`,
+    [filter.limit, filter.offset],
+    cb
+  );
+};
+
+exports.selectCountPopularProduct = (filter, cb) => {
+  db.query(
+    `SELECT COUNT(dt.product_name) AS "totalData" FROM "detailTransaction" dt JOIN product p ON dt.product_id = p.id`,
+    cb
+  );
+};
