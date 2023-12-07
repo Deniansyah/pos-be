@@ -4,10 +4,14 @@ const {
   createTransaction,
   deleteTransaction,
   readTransaction,
+  readAllTodaysTotals,
+  readAllYesterdaysTotals,
 } = require("../controllers/transaction.controller");
 const { auth, isCashier } = require("../middlewares/auth");
 
 transactionRouter.get("/transaction", auth, readAllTransaction);
+transactionRouter.get("/transaction/today", auth, readAllTodaysTotals);
+transactionRouter.get("/transaction/yesterday", auth, readAllYesterdaysTotals);
 transactionRouter.post("/transaction", auth, isCashier, createTransaction);
 transactionRouter.delete("/transaction/:id", auth, isCashier, deleteTransaction);
 transactionRouter.get("/transaction/:id", auth, readTransaction);

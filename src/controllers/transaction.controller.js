@@ -6,6 +6,8 @@ const {
   insertTransaction,
   dropTransaction,
   selectTransaction,
+  selectAllTodaysTotals,
+  selectAllYesterdaysTotals,
 } = require("../models/transaction.model");
 
 exports.readAllTransaction = (req, res) => {
@@ -77,3 +79,30 @@ exports.readTransaction = (req, res) => {
   }
 };
 
+exports.readAllTodaysTotals = (req, res) => {
+  try {
+    selectAllTodaysTotals((error, data) => {
+      return res.status(200).json({
+        status: true,
+        message: "All today's totals",
+        results: data.rows[0],
+      });
+    });
+  } catch (error) {
+    return response(res, 500);
+  }
+};
+
+exports.readAllYesterdaysTotals = (req, res) => {
+  try {
+    selectAllYesterdaysTotals((error, data) => {
+      return res.status(200).json({
+        status: true,
+        message: "All yesterday's totals",
+        results: data.rows[0],
+      });
+    });
+  } catch (error) {
+    return response(res, 500);
+  }
+};

@@ -31,3 +31,11 @@ exports.dropTransaction = (id, cb) => {
 exports.selectTransaction = (id, cb) => {
   db.query('SELECT "t"."id" AS "id", "t"."users_id", "u"."name" AS "name", "t"."invoice", "t"."date", "t"."total", "t"."createdAt", "t"."updatedAt" FROM "transaction" "t" JOIN "users" "u" ON "t"."users_id" = "u"."id" WHERE t.id = $1', [id], cb);
 };
+
+exports.selectAllTodaysTotals = (cb) => {
+  db.query('SELECT CURRENT_DATE AS date, COALESCE(SUM(total), 0) AS allTotal FROM transaction WHERE date::date = CURRENT_DATE', cb)
+}
+
+exports.selectAllYesterdaysTotals = (cb) => {
+  db.query(`SELECT CURRENT_DATE - INTERVAL '1 day' AS date, COALESCE(SUM(total), 0) AS allTotal FROM transaction WHERE date::date = (CURRENT_DATE - INTERVAL '1 day')::date`, cb)
+}
