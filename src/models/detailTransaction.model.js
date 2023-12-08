@@ -34,7 +34,7 @@ exports.selectALLTransactionByTransactionId = (transaction_id, cb) => {
 
 exports.selectPopularProduct = (filter, cb) => {
   db.query(
-    `SELECT dt.id, p.picture, dt.product_name AS name, p.description, dt.product_price AS price, dt.qty, dt."createdAt", dt."updatedAt" FROM "detailTransaction" dt JOIN product p ON dt.product_id = p.id ORDER BY dt.qty DESC LIMIT $1 OFFSET $2`,
+    `SELECT p.id, p.picture, dt.product_name AS name, p.description, dt.product_price AS price, SUM(dt.qty) AS total_qty, MIN(dt."createdAt") AS min_createdAt, MAX(dt."updatedAt") AS max_updatedAt FROM "detailTransaction" dt JOIN product p ON dt.product_id = p.id GROUP BY p.id, p.picture, dt.product_name, p.description, dt.product_price ORDER BY total_qty DESC LIMIT $1 OFFSET $2`,
     [filter.limit, filter.offset],
     cb
   );
