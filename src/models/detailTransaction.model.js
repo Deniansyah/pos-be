@@ -46,3 +46,11 @@ exports.selectCountPopularProduct = (filter, cb) => {
     cb
   );
 };
+
+exports.selectTodaysOrdered = (cb) => {
+  db.query('SELECT COALESCE(SUM(qty), 0) AS "productOrdered" FROM "detailTransaction" WHERE "createdAt"::date = CURRENT_DATE', cb)
+}
+
+exports.selectYesterdaysOrdered = (cb) => {
+  db.query(`SELECT COALESCE(SUM(qty), 0) AS "productOrdered" FROM "detailTransaction" WHERE "createdAt"::date = (CURRENT_DATE - INTERVAL '1 day')::date`, cb)
+}

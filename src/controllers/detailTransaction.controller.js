@@ -9,6 +9,8 @@ const {
   selectALLTransactionByTransactionId,
   selectCountPopularProduct,
   selectPopularProduct,
+  selectTodaysOrdered,
+  selectYesterdaysOrdered,
 } = require("../models/detailTransaction.model");
 
 exports.readAllDetailTransaction = (req, res) => {
@@ -178,6 +180,34 @@ exports.readPopularProduct = (req, res) => {
         }
       }
     );
+  } catch (error) {
+    return response(res, 500);
+  }
+};
+
+exports.readTodaysOrdered = (req, res) => {
+  try {
+    selectTodaysOrdered((error, data) => {
+      return res.status(200).json({
+        status: true,
+        message: "Today's Product Ordered",
+        results: data.rows[0],
+      });
+    });
+  } catch (error) {
+    return response(res, 500);
+  }
+};
+
+exports.readYesterdaysOrdered = (req, res) => {
+  try {
+    selectYesterdaysOrdered((error, data) => {
+      return res.status(200).json({
+        status: true,
+        message: "Yesterday's Product Ordered",
+        results: data.rows[0],
+      });
+    });
   } catch (error) {
     return response(res, 500);
   }

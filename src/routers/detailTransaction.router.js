@@ -7,11 +7,15 @@ const {
   readDetailTransaction,
   readAllTransactionByTransactionId,
   createDetailTransactionArray,
-  readPopularProduct
+  readPopularProduct,
+  readTodaysOrdered,
+  readYesterdaysOrdered
 } = require("../controllers/detailTransaction.controller");
 const { auth, isCashier } = require("../middlewares/auth");
 
 detailTransactionRouter.get("/detail-transaction", auth, readAllDetailTransaction);
+detailTransactionRouter.get("/detail-transaction/ordered/today", auth, readTodaysOrdered);
+detailTransactionRouter.get("/detail-transaction/ordered/yesterday", auth, readYesterdaysOrdered);
 detailTransactionRouter.get("/detail-transaction/popular-product", auth, readPopularProduct);
 detailTransactionRouter.post("/detail-transaction", auth, isCashier, createDetailTransaction);
 detailTransactionRouter.post("/detail-transaction-arr", auth, isCashier, createDetailTransactionArray);
