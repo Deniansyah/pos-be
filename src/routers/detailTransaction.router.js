@@ -16,7 +16,7 @@ const { auth, isCashier } = require("../middlewares/auth");
 detailTransactionRouter.get("/detail-transaction", auth, readAllDetailTransaction);
 detailTransactionRouter.get("/detail-transaction/ordered/today", auth, readTodaysOrdered);
 detailTransactionRouter.get("/detail-transaction/ordered/yesterday", auth, readYesterdaysOrdered);
-detailTransactionRouter.get("/detail-transaction/popular-product", auth, readPopularProduct);
+detailTransactionRouter.get("/detail-transaction/popular-product", readPopularProduct);
 detailTransactionRouter.post("/detail-transaction", auth, isCashier, createDetailTransaction);
 detailTransactionRouter.post("/detail-transaction-arr", auth, isCashier, createDetailTransactionArray);
 detailTransactionRouter.patch("/detail-transaction/:id", auth, isCashier, updateDetailTransaction);
